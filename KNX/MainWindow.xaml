@@ -1,0 +1,43 @@
+﻿<Window x:Class="KNX.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KNX"
+        mc:Ignorable="d"
+        Title="KNX" Height="300" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+            <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="60"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="35"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Content="V0.0 " Grid.Column="7" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" />
+
+        <ListBox  Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2">
+            <RadioButton x:Name="rb_Alle_Projekte_Loeschen" Content="Alle Projekte Löschen" IsChecked="True" Checked="Rb_Alle_Projekte_Loeschen_Checked"  />
+            <RadioButton  x:Name="rb_MDT_verwenden" Content="MDT verwenden" Checked="Rb_MDT_verwenden_Checked"  />
+            <RadioButton  x:Name="rb_Siemens_verwenden" Content="Siemens verwenden" Checked="Rb_Siemens_verwenden_Checked"  />
+        </ListBox>
+
+        <Button x:Name="btn_Start" Content="Start" Grid.Column="6" Grid.Row="1" Click="Btn_Start_Click" />
+        <TextBox x:Name="txt_Box" Grid.Column="2" Grid.ColumnSpan="6"  Grid.Row="4" TextWrapping="Wrap" Text="Alle KNX Projekte löschen und die ETS5 starten"/>
+
+    </Grid>
+</Window>
