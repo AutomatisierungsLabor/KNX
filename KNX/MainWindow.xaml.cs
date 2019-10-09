@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,5 +46,21 @@ namespace KNX
         {
             OrdnerStrukturAnpassen();
         }
+
+        private void Btn_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                foreach (Process proc in Process.GetProcessesByName("ets5"))
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
     }
 }

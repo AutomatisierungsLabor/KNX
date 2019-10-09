@@ -68,9 +68,24 @@ namespace KNX
                 OrdnerKopieren("s:\\Linder Kurt\\KNX\\MDT\\AppData", AppDataFolder);
                 OrdnerKopieren("s:\\Linder Kurt\\KNX\\MDT\\ProgramData", ProgDataFolder);
             }
+
+            if (rb_Siemens_verwenden.IsChecked == true)
+            {
+                // ein Leeres Projekt hineinkopieren
+                OrdnerKopieren("s:\\Linder Kurt\\KNX\\Siemens\\AppData", AppDataFolder);
+                OrdnerKopieren("s:\\Linder Kurt\\KNX\\Siemens\\ProgramData", ProgDataFolder);
+            }
+
+            try
+            {
+                System.Diagnostics.Process.Start("c:\\Program Files (x86)\\ETS5\\ETS5.exe");
+            }
+            catch (Exception exp)
+            {
+                Console.WriteLine($"{exp} Exception 12 caught.");
+            }
         }
 
-      
         public void OrdnerLoeschen(string Ordner)
         {
             try
@@ -118,7 +133,5 @@ namespace KNX
                 CopyAll(diSourceSubDir, nextTargetSubDir);
             }
         }
-
-
     }
 }
