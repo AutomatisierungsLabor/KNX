@@ -1,13 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Diagnostics;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 
 namespace KNX
 {
