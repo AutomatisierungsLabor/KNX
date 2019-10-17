@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
+using System.Xml.Linq;
+using System.Collections.Generic;
+using System.IO;
+
 
 namespace KNX
 {
@@ -9,25 +14,80 @@ namespace KNX
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        List<Tuple<int, string, string, string>> ListeRadioButtons = new List<Tuple<int, string, string, string>>();
+        int ProjektNummer = 0;
         public MainWindow()
         {
             InitializeComponent();
+            XML_EinstellungenLesen();
         }
 
-        private void Rb_Alle_Projekte_Loeschen_Checked(object sender, RoutedEventArgs e)
+        private void XML_EinstellungenLesen()
         {
-            if (txt_Box != null) { txt_Box.Text = "Alle KNX Projekte löschen und die ETS5 starten"; }
+            int LaufendeNummer = 0;
+            string Ordner = "";
+            string Beschriftung = "";
+            string Beschreibung = "";
 
+            if (!File.Exists("Einstellungen.xml"))
+            {
+                var result = System.Windows.MessageBox.Show("Die Datei Einstellungen.xml fehlt!");
+                Environment.Exit(0);
+            }
+
+            XDocument doc = XDocument.Load("Einstellungen.xml");
+
+            foreach (XElement el in doc.Root.Descendants())
+            {
+                switch (el.Name.LocalName)
+                {
+                    case "Beschriftung": Beschriftung = el.Value; break;
+                    case "Ordner": Ordner = el.Value; break;
+                    case "Beschreibung": Beschreibung = el.Value; break;
+                    default:
+                        break;
+                }
+
+                if (Beschriftung != "" && Ordner != "" && Beschreibung != "")
+                {
+                    // Kombination eintragen
+                    ListeRadioButtons.Add(Tuple.Create(LaufendeNummer, Ordner, Beschriftung, Beschreibung));
+                    LaufendeNummer++;
+                    Ordner = "";
+                    Beschriftung = "";
+                    Beschreibung = "";
+                }
+            }
+
+            foreach (Tuple<int, string, string, string> t in ListeRadioButtons)
+            {
+
+                RadioButton rdo = new RadioButton
+                {
+                    GroupName = "KNX Gruppe",
+                    Name = "Button" + "_" + t.Item1.ToString(),
+                    FontSize = 14,
+                    Content = t.Item3,
+                    VerticalAlignment = VerticalAlignment.Top
+                };
+
+                rdo.Checked += new RoutedEventHandler(KNX_RadioButton_Aktiviert);
+
+                StackPanelKNX.Children.Add(rdo);
+            }
         }
 
-        private void Rb_MDT_verwenden_Checked(object sender, RoutedEventArgs e)
+        public void KNX_RadioButton_Aktiviert(object sender, RoutedEventArgs e)
         {
-            if (txt_Box != null) { txt_Box.Text = "MDT Produktdatenbank verwenden und ETS5 starten"; }
-        }
+            RadioButton rb = sender as RadioButton;
+            string[] words = rb.Name.Split('_');
 
-        private void Rb_Siemens_verwenden_Checked(object sender, RoutedEventArgs e)
-        {
-            if (txt_Box != null) { txt_Box.Text = "Siemens Produktdatenbank verwenden und ETS5 starten"; }
+            ProjektNummer = Int32.Parse(words[1]);
+            txt_Box.Text = ListeRadioButtons[ProjektNummer].Item4;
+
+            btn_Start.IsEnabled = true;
+            btn_Stop.IsEnabled = true;
         }
 
         private void Btn_Start_Click(object sender, RoutedEventArgs e)

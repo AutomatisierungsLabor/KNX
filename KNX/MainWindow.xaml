@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KNX"
         mc:Ignorable="d"
-        Title="KNX" Height="300" Width="600">
+        Title="KNX" Height="300" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"></ColumnDefinition>
@@ -31,16 +31,12 @@
 
         <Label Content="V1.0 " Grid.Column="7" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" />
 
-        <ListBox  Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="3">
-            <RadioButton x:Name="rb_Alle_Projekte_Loeschen" Content="Alle Projekte Löschen" IsChecked="True" Checked="Rb_Alle_Projekte_Loeschen_Checked"  />
-            <RadioButton  x:Name="rb_MDT_verwenden" Content="MDT verwenden" Checked="Rb_MDT_verwenden_Checked"  />
-            <RadioButton  x:Name="rb_Siemens_verwenden" Content="Siemens verwenden" Checked="Rb_Siemens_verwenden_Checked"  />
-        </ListBox>
+        <Button x:Name="btn_Start" Content="Start" Grid.Column="6" Grid.Row="1" Background="LawnGreen" Click="Btn_Start_Click" IsEnabled="False" />
+        <Button x:Name="btn_Stop" Content="Stop" Grid.Column="6" Grid.Row="3" Background="Red"  Click="Btn_Stop_Click" IsEnabled="False" />
 
-        <Button x:Name="btn_Start" Content="Start" Grid.Column="6" Grid.Row="1" Background="LawnGreen" Click="Btn_Start_Click" />
-        <Button x:Name="btn_Stop" Content="Stop" Grid.Column="6" Grid.Row="3" Background="Red"  Click="Btn_Stop_Click" />
-        
-        <TextBox x:Name="txt_Box" Grid.Column="2" Grid.ColumnSpan="6"  Grid.Row="5" TextWrapping="Wrap" Text="Alle KNX Projekte löschen und die ETS5 starten"/>
+        <StackPanel x:Name="StackPanelKNX" Grid.Column="2"  Grid.Row="1" Grid.RowSpan="3"  Grid.ColumnSpan="3" />
+
+        <TextBox x:Name="txt_Box" Grid.Column="2" Grid.ColumnSpan="6"  Grid.Row="5" TextWrapping="Wrap" />
 
     </Grid>
 </Window>

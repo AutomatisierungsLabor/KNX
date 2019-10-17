@@ -5,7 +5,7 @@ namespace KNX
 {
     public partial class MainWindow
     {
-        public void OrdnerStrukturAnpassen()
+        private void OrdnerStrukturAnpassen()
         {
             string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string ProgDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
@@ -47,26 +47,8 @@ namespace KNX
 
             txt_Box.AppendText("\n");
 
-            if (rb_Alle_Projekte_Loeschen.IsChecked == true)
-            {
-                // ein Leeres Projekt hineinkopieren
-                OrdnerKopieren("s:\\Linder Kurt\\KNX\\LeeresProjekt\\AppData", AppDataFolder);
-                OrdnerKopieren("s:\\Linder Kurt\\KNX\\LeeresProjekt\\ProgramData", ProgDataFolder);
-            }
-
-            if (rb_MDT_verwenden.IsChecked == true)
-            {
-                // ein Leeres Projekt hineinkopieren
-                OrdnerKopieren("s:\\Linder Kurt\\KNX\\MDT\\AppData", AppDataFolder);
-                OrdnerKopieren("s:\\Linder Kurt\\KNX\\MDT\\ProgramData", ProgDataFolder);
-            }
-
-            if (rb_Siemens_verwenden.IsChecked == true)
-            {
-                // ein Leeres Projekt hineinkopieren
-                OrdnerKopieren("s:\\Linder Kurt\\KNX\\Siemens\\AppData", AppDataFolder);
-                OrdnerKopieren("s:\\Linder Kurt\\KNX\\Siemens\\ProgramData", ProgDataFolder);
-            }
+            OrdnerKopieren(ListeRadioButtons[ProjektNummer].Item2 + "\\AppData", AppDataFolder);
+            OrdnerKopieren(ListeRadioButtons[ProjektNummer].Item2 + "\\ProgramData", ProgDataFolder);
 
             try
             {
@@ -78,7 +60,7 @@ namespace KNX
             }
         }
 
-        public void OrdnerLoeschen(string Ordner)
+        private void OrdnerLoeschen(string Ordner)
         {
             try
             {
@@ -91,7 +73,7 @@ namespace KNX
             }
         }
 
-        public void OrdnerKopieren(string QuellOrdner, string ZielOrdner)
+        private void OrdnerKopieren(string QuellOrdner, string ZielOrdner)
         {
             try
             {
@@ -111,19 +93,18 @@ namespace KNX
         {
             Directory.CreateDirectory(target.FullName);
 
-            // Copy each file into the new directory.
             foreach (FileInfo fi in source.GetFiles())
             {
                 Console.WriteLine($@"Copying {target.FullName}\{fi.Name}");
                 fi.CopyTo(System.IO.Path.Combine(target.FullName, fi.Name), true);
             }
 
-            // Copy each subdirectory using recursion.
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
             {
                 DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
                 CopyAll(diSourceSubDir, nextTargetSubDir);
             }
         }
+
     }
 }
