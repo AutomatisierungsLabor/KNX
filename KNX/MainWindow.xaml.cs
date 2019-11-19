@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml.Linq;
-using System.Collections.Generic;
-using System.IO;
 
 
 namespace KNX
@@ -62,7 +62,6 @@ namespace KNX
 
             foreach (Tuple<int, string, string, string> t in ListeRadioButtons)
             {
-
                 RadioButton rdo = new RadioButton
                 {
                     GroupName = "KNX Gruppe",
@@ -73,7 +72,6 @@ namespace KNX
                 };
 
                 rdo.Checked += new RoutedEventHandler(KNX_RadioButton_Aktiviert);
-
                 StackPanelKNX.Children.Add(rdo);
             }
         }
@@ -92,17 +90,14 @@ namespace KNX
 
         private void Btn_Start_Click(object sender, RoutedEventArgs e)
         {
-            OrdnerStrukturAnpassen();
+            System.Threading.Tasks.Task.Run(() => OrdnerStrukturAnpassen());
         }
 
         private void Btn_Stop_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                foreach (Process proc in Process.GetProcessesByName("ets5"))
-                {
-                    proc.Kill();
-                }
+                foreach (Process proc in Process.GetProcessesByName("ets5")) proc.Kill();
             }
             catch (Exception ex)
             {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 
 namespace KNX
 {
@@ -33,19 +32,20 @@ namespace KNX
                     "KNX\\ETS5\\Updater"
                     };
 
-            txt_Box.Text = "";
-
-            foreach (string Ordner in LocalAppData)
+            this.Dispatcher.Invoke(() =>
             {
-                OrdnerLoeschen(AppDataFolder + "\\" + Ordner);
-            }
+                btn_Start.IsEnabled = false;
+                txt_Box.Text = "";
+            });
 
-            foreach (string Ordner in ProgrammData)
+            foreach (string Ordner in LocalAppData) OrdnerLoeschen(AppDataFolder + "\\" + Ordner);
+            foreach (string Ordner in ProgrammData) OrdnerLoeschen(ProgDataFolder + "\\" + Ordner);
+
+            this.Dispatcher.Invoke(() =>
             {
-                OrdnerLoeschen(ProgDataFolder + "\\" + Ordner);
-            }
+                txt_Box.AppendText("\n");
+            });
 
-            txt_Box.AppendText("\n");
 
             OrdnerKopieren(ListeRadioButtons[ProjektNummer].Item2 + "\\AppData", AppDataFolder);
             OrdnerKopieren(ListeRadioButtons[ProjektNummer].Item2 + "\\ProgramData", ProgDataFolder);
@@ -58,52 +58,13 @@ namespace KNX
             {
                 Console.WriteLine($"{exp} Exception 12 caught.");
             }
-        }
 
-        private void OrdnerLoeschen(string Ordner)
-        {
-            try
+            this.Dispatcher.Invoke(() =>
             {
-                System.IO.Directory.Delete(Ordner, true);
-                txt_Box.AppendText(Ordner + " gelöscht\n");
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine($"{exp} Exception 1 caught.");
-            }
-        }
-
-        private void OrdnerKopieren(string QuellOrdner, string ZielOrdner)
-        {
-            try
-            {
-                DirectoryInfo diSource = new DirectoryInfo(QuellOrdner);
-                DirectoryInfo diTarget = new DirectoryInfo(ZielOrdner);
-
-                CopyAll(diSource, diTarget);
-                txt_Box.AppendText(ZielOrdner + " kopiert\n");
-            }
-            catch (Exception exp)
-            {
-                Console.WriteLine($"{exp} Exception 2 caught.");
-            }
-        }
-
-        public void CopyAll(DirectoryInfo source, DirectoryInfo target)
-        {
-            Directory.CreateDirectory(target.FullName);
-
-            foreach (FileInfo fi in source.GetFiles())
-            {
-                Console.WriteLine($@"Copying {target.FullName}\{fi.Name}");
-                fi.CopyTo(System.IO.Path.Combine(target.FullName, fi.Name), true);
-            }
-
-            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
-            {
-                DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir);
-            }
+                txt_Box.AppendText("\n");
+                txt_Box.AppendText("ETS5 starten");
+                btn_Start.IsEnabled = true;
+            });
         }
 
     }
