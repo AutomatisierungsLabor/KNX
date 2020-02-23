@@ -31,12 +31,13 @@
 
         <Label Content="V1.1 " Grid.Column="7" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" />
 
-        <Button x:Name="btn_Start" Content="Start" Grid.Column="6" Grid.Row="1" Background="LawnGreen" Click="Btn_Start_Click" IsEnabled="False" />
-        <Button x:Name="btn_Stop" Content="Stop" Grid.Column="6" Grid.Row="3" Background="Red"  Click="Btn_Stop_Click" IsEnabled="False" />
+        <Button Grid.Column="6" Grid.Row="1" Content="Start"  Background="LawnGreen" IsEnabled="False" Command="{Binding BtnStart}"/>
+        <Button Grid.Column="6" Grid.Row="3" Content="Stop"   Background="Red"       IsEnabled="False" Command="{Binding BtnStart}"/>
 
         <StackPanel x:Name="StackPanelKNX" Grid.Column="2"  Grid.Row="1" Grid.RowSpan="3"  Grid.ColumnSpan="3" />
 
         <TextBox x:Name="txt_Box" Grid.Column="2" Grid.ColumnSpan="6"  Grid.Row="5" TextWrapping="Wrap" />
+        <ComboBox ItemsSource="{Binding Knx.KnxEinstellungen.AlleKnxProjekte}" Grid.ColumnSpan="3" Grid.Column="2" HorizontalAlignment="Left" Height="61" Margin="31,40,0,0" Grid.Row="5" VerticalAlignment="Top" Width="149"/>
 
     </Grid>
 </Window>

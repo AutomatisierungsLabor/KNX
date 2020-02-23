@@ -1,6 +1,6 @@
-﻿using System;
+﻿using KNX.Model;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,17 +9,25 @@ using System.Xml.Linq;
 
 namespace KNX
 {
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
 
         List<Tuple<int, string, string, string>> ListeRadioButtons = new List<Tuple<int, string, string, string>>();
         int ProjektNummer = 0;
+
+
+        public ViewModel.KnxViewModel knxViewModel { get; set; }
         public MainWindow()
         {
+
+            knxViewModel = new ViewModel.KnxViewModel(this);
+
+
+
             InitializeComponent();
+            DataContext = knxViewModel;
+
+
             XML_EinstellungenLesen();
         }
 
@@ -84,17 +92,17 @@ namespace KNX
             ProjektNummer = Int32.Parse(words[1]);
             txt_Box.Text = ListeRadioButtons[ProjektNummer].Item4;
 
-            btn_Start.IsEnabled = true;
-            btn_Stop.IsEnabled = true;
+            //btn_Start.IsEnabled = true;
+            // btn_Stop.IsEnabled = true;
         }
 
         private void Btn_Start_Click(object sender, RoutedEventArgs e)
         {
-            System.Threading.Tasks.Task.Run(() => OrdnerStrukturAnpassen());
+            // System.Threading.Tasks.Task.Run(() => OrdnerStrukturAnpassen());
         }
 
         private void Btn_Stop_Click(object sender, RoutedEventArgs e)
-        {
+        {/*
             try
             {
                 foreach (Process proc in Process.GetProcessesByName("ets5")) proc.Kill();
@@ -103,6 +111,7 @@ namespace KNX
             {
                 MessageBox.Show(ex.Message);
             }
+            */
         }
 
     }

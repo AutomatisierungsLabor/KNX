@@ -1,0 +1,17 @@
+﻿<SPS-Starter>
+  <Button>
+    <Beschriftung>Reset</Beschriftung>
+    <Ordner>s:\Linder Kurt\KNX\LeeresProjekt</Ordner>
+    <Beschreibung>Alle KNX Projekte entfernen und die ETS5 starten</Beschreibung>
+  </Button>
+  <Button>
+    <Beschriftung>MDT verwenden</Beschriftung>
+    <Ordner>s:\Linder Kurt\KNX\MDT</Ordner>
+    <Beschreibung>MDT Produktdatenbank verwenden und ETS5 starten</Beschreibung>
+  </Button>
+  <Button>
+    <Beschriftung>Siemens verwenden</Beschriftung>
+    <Ordner>s:\Linder Kurt\KNX\Siemens</Ordner>
+    <Beschreibung>Siemens Produktdatenbank verwenden und ETS5 starten</Beschreibung>
+  </Button>
+</SPS-Starter>

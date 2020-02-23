@@ -1,0 +1,19 @@
+﻿{
+  "AlleKnxProjekte": [
+    {
+      "Beschreibung": "Reset",
+      "Kommentar": "Alle KNX Projekte entfernen und die ETS5 starten",
+      "Quelle": "S:\\Linder Kurt\\KNX\\LeeresProjekt"
+    },
+    {
+      "Beschreibung": "MDT verwenden",
+      "Kommentar": "MDT Produktdatenbank verwenden und ETS5 starten",
+      "Quelle": "s:\\Linder Kurt\\KNX\\MDT"
+    },
+    {
+      "Beschreibung": "Siemens verwenden",
+      "Kommentar": "Siemens Produktdatenbank verwenden und ETS5 starten",
+      "Quelle": "s:\\Linder Kurt\\KNX\\Siemens"
+    }
+  ]
+}
