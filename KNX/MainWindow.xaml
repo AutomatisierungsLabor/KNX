@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KNX"
         mc:Ignorable="d"
-        Title="KNX" Height="300" Width="400">
+        Title="KNX" Height="400" Width="470">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"></ColumnDefinition>
             <ColumnDefinition Width="10"></ColumnDefinition>
             <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="70"></ColumnDefinition>
             <ColumnDefinition Width="50"></ColumnDefinition>
             <ColumnDefinition Width="70"></ColumnDefinition>
             <ColumnDefinition Width="50"></ColumnDefinition>
-            <ColumnDefinition Width="60"></ColumnDefinition>
+            <ColumnDefinition Width="70"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="10"></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -29,15 +30,13 @@
             <RowDefinition Height="10"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="V1.1 " Grid.Column="7" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" />
+        <Label Content="V2.0 " Grid.Column="8" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" />
 
-        <Button Grid.Column="6" Grid.Row="1" Content="Start"  Background="LawnGreen" IsEnabled="False" Command="{Binding BtnStart}"/>
-        <Button Grid.Column="6" Grid.Row="3" Content="Stop"   Background="Red"       IsEnabled="False" Command="{Binding BtnStart}"/>
+        <Button Grid.Column="7" Grid.Row="1" Content="Start"  Background="LawnGreen" FontSize="14pt" IsEnabled="{Binding ViAnzeige.EnableButton}" Command="{Binding BtnStart}"/>
+        <Button Grid.Column="7" Grid.Row="3" Content="Stop"   Background="Red"       FontSize="14pt" IsEnabled="{Binding ViAnzeige.EnableButton}" Command="{Binding BtnStop}"/>
 
-        <StackPanel x:Name="StackPanelKNX" Grid.Column="2"  Grid.Row="1" Grid.RowSpan="3"  Grid.ColumnSpan="3" />
+        <ComboBox Grid.Column="2" Grid.ColumnSpan="4"  Grid.Row="1" FontSize="14pt" SelectedIndex="{Binding ViAnzeige.SelectedIndex, Mode=TwoWay}"  ItemsSource="{Binding Knx.KnxEinstellungen.AlleKnxProjekte}"/>
 
-        <TextBox x:Name="txt_Box" Grid.Column="2" Grid.ColumnSpan="6"  Grid.Row="5" TextWrapping="Wrap" />
-        <ComboBox ItemsSource="{Binding Knx.KnxEinstellungen.AlleKnxProjekte}" Grid.ColumnSpan="3" Grid.Column="2" HorizontalAlignment="Left" Height="61" Margin="31,40,0,0" Grid.Row="5" VerticalAlignment="Top" Width="149"/>
-
+        <TextBox  Grid.Column="2" Grid.ColumnSpan="6"  Grid.Row="5" TextWrapping="Wrap" FontSize="14pt" Text="{Binding ViAnzeige.TextBoxText}" />
     </Grid>
 </Window>

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace KNX.Model
 {
@@ -10,10 +9,16 @@ namespace KNX.Model
 
     public class KnxProjekte
     {
+        public KnxProjekte(string beschreibung)
+        {
+            Beschreibung = beschreibung;
+            Kommentar = "";
+            Quelle = "";
+        }
+
         public string Beschreibung { get; set; }
         public string Kommentar { get; set; }
         public string Quelle { get; set; }
-
         public override string ToString()
         {
             return Beschreibung;

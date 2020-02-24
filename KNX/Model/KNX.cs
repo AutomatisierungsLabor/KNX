@@ -1,20 +1,25 @@
 ﻿namespace KNX.Model
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
+    using System.Text;
+    using System.Windows;
 
     public class Knx
     {
-        private MainWindow mainWindow;
-
         public Einstellungen KnxEinstellungen { get; set; }
+        private int selectedIndex;
+        private bool enableBothButtons;
+        private readonly StringBuilder textBoxText;
+        private readonly DateienUndOrdner dDO;
 
-
-        public Knx(MainWindow mainWindow)
+        public Knx()
         {
-            this.mainWindow = mainWindow;
-
+            textBoxText = new StringBuilder();
+            dDO = new DateienUndOrdner();
             KnxEinstellungen = Newtonsoft.Json.JsonConvert.DeserializeObject<Einstellungen>(File.ReadAllText("Einstellungen.json"));
+            KnxEinstellungen.AlleKnxProjekte.Insert(0, new KnxProjekte("Bitte Projekt auswählen!"));
         }
 
         private void OrdnerStrukturAnpassen()
@@ -45,25 +50,17 @@
                     "KNX\\ETS5\\Updater"
                     };
 
-            /*
-            this.Dispatcher.Invoke(() =>
-            {
-                btn_Start.IsEnabled = false;
-                txt_Box.Text = "";
-            });
-            
-            foreach (string Ordner in LocalAppData) OrdnerLoeschen(AppDataFolder + "\\" + Ordner);
-            foreach (string Ordner in ProgrammData) OrdnerLoeschen(ProgDataFolder + "\\" + Ordner);
-           
-            this.Dispatcher.Invoke(() =>
-            {
-                txt_Box.AppendText("\n");
-            });
-           
+            enableBothButtons = false;
+            textBoxText.Clear();
 
-            OrdnerKopieren(ListeRadioButtons[ProjektNummer].Item2 + "\\AppData", AppDataFolder);
-            OrdnerKopieren(ListeRadioButtons[ProjektNummer].Item2 + "\\ProgramData", ProgDataFolder);
-           
+            foreach (string Ordner in LocalAppData) textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(AppDataFolder + "\\" + Ordner));
+            foreach (string Ordner in ProgrammData) textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(ProgDataFolder + "\\" + Ordner));
+
+            textBoxText.Append("\n");
+
+            textBoxText.Append(dDO.OrdnerKopieren(KnxEinstellungen.AlleKnxProjekte[selectedIndex].Quelle + "\\AppData", AppDataFolder));
+            textBoxText.Append(dDO.OrdnerKopieren(KnxEinstellungen.AlleKnxProjekte[selectedIndex].Quelle + "\\ProgramData", ProgDataFolder));
+
             try
             {
                 System.Diagnostics.Process.Start("c:\\Program Files (x86)\\ETS5\\ETS5.exe");
@@ -73,23 +70,37 @@
                 Console.WriteLine($"{exp} Exception 12 caught.");
             }
 
-            this.Dispatcher.Invoke(() =>
-            {
-                txt_Box.AppendText("\n");
-                txt_Box.AppendText("ETS5 starten");
-                btn_Start.IsEnabled = true;
-            });
-            */
+            textBoxText.Append("\n");
+            textBoxText.Append("ETS5 starten");
+            selectedIndex = 0;
         }
 
+        internal bool BothButtonsEnabled() { return enableBothButtons; }
+        internal object TextBoxText() { return textBoxText; }
+        internal int GetSelectedIndex() { return selectedIndex; }
+
+        internal void SelectedIndexChanched(object selectedIndex)
+        {
+            int i = (int)selectedIndex;
+            if (i > 0) enableBothButtons = true; else enableBothButtons = false;
+            this.selectedIndex = i;
+            textBoxText.Clear();
+            textBoxText.Append(KnxEinstellungen.AlleKnxProjekte[i].Kommentar);
+        }
+
+        internal void TasterStart() { System.Threading.Tasks.Task.Run(() => OrdnerStrukturAnpassen()); }
         internal void TasterStop()
         {
-            throw new NotImplementedException();
-        }
-
-        internal void TasterStart()
-        {
-            throw new NotImplementedException();
+            try
+            {
+                foreach (Process proc in Process.GetProcessesByName("ets5")) proc.Kill();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            selectedIndex = 0;
+            enableBothButtons = false;
         }
     }
 }

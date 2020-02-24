@@ -1,50 +1,42 @@
-﻿using System;
-using System.IO;
-
-namespace KNX.Model
+﻿namespace KNX.Model
 {
-    public class DateiSystem
+    using System;
+    using System.IO;
+    public class DateienUndOrdner
     {
-        private void OrdnerLoeschen(string Ordner)
+        public  DateienUndOrdner()
+        {
+            //
+        }
+        public static string OrdnerLoeschen(string Ordner)
         {
             try
             {
-               /*
                 System.IO.Directory.Delete(Ordner, true);
-                this.Dispatcher.Invoke(() =>
-                {
-                    txt_Box.AppendText(Ordner + " gelöscht\n");
-                });
-                */
+                return (Ordner + " gelöscht\n");
             }
             catch (Exception exp)
             {
                 Console.WriteLine($"{exp} Exception 1 caught.");
             }
-
+            return "uups\n";
         }
 
-        private void OrdnerKopieren(string QuellOrdner, string ZielOrdner)
+        public string OrdnerKopieren(string QuellOrdner, string ZielOrdner)
         {
-
             try
             {
                 DirectoryInfo diSource = new DirectoryInfo(QuellOrdner);
                 DirectoryInfo diTarget = new DirectoryInfo(ZielOrdner);
 
                 CopyAll(diSource, diTarget);
-                /*
-                this.Dispatcher.Invoke(() =>
-                {
-                    txt_Box.AppendText(ZielOrdner + " kopiert\n");
-                });
-                */
+                return (ZielOrdner + " kopiert\n");
             }
             catch (Exception exp)
             {
                 Console.WriteLine($"{exp} Exception 2 caught.");
             }
-
+            return "uups\n";
         }
 
         public void CopyAll(DirectoryInfo source, DirectoryInfo target)
@@ -63,7 +55,5 @@ namespace KNX.Model
                 CopyAll(diSourceSubDir, nextTargetSubDir);
             }
         }
-
-
     }
 }

@@ -1,20 +1,18 @@
 ﻿namespace KNX.ViewModel
 {
     using Commands;
-    using KNX.Model;
-    using System.ComponentModel;
-    using System.IO;
     using System.Windows.Input;
 
-    public class KnxViewModel : INotifyPropertyChanged
+    public class KnxViewModel
     {
 
-        public readonly Model.Knx knx;
+        public Model.Knx knx;
+        public VisuAnzeigen ViAnzeige { get; set; }
 
-   
-        public KnxViewModel(MainWindow mainWindow)
+        public KnxViewModel()
         {
-            knx = new KNX.Model.Knx(mainWindow);          
+            knx = new KNX.Model.Knx();
+            ViAnzeige = new VisuAnzeigen(knx);
         }
 
         public Model.Knx Knx { get { return knx; } }
@@ -36,9 +34,6 @@
 
         #region BtnStop
         private ICommand _btnStop;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public ICommand BtnStop
         {
             get
@@ -51,7 +46,6 @@
             }
         }
         #endregion
-
-
+        
     }
 }
