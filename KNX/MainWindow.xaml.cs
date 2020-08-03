@@ -1,17 +1,14 @@
-﻿using System.Windows;
-
-namespace KNX
+﻿namespace KNX
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
-        public ViewModel.KnxViewModel knxViewModel { get; set; }
-
+        public ViewModel.KnxViewModel KnxViewModel { get; set; }
         public MainWindow()
         {
-            knxViewModel = new ViewModel.KnxViewModel();
+            KnxViewModel = new ViewModel.KnxViewModel();
 
             InitializeComponent();
-            DataContext = knxViewModel;
+            DataContext = KnxViewModel;
         }
     }
 }

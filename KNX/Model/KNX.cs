@@ -9,25 +9,25 @@
     public class Knx
     {
         public Einstellungen KnxEinstellungen { get; set; }
-        private int selectedIndex;
-        private bool enableBothButtons;
-        private readonly StringBuilder textBoxText;
-        private readonly DateienUndOrdner dDO;
+        private int _selectedIndex;
+        private bool _enableBothButtons;
+        private readonly StringBuilder _textBoxText;
+        private readonly DateienUndOrdner _dDo;
 
         public Knx()
         {
-            textBoxText = new StringBuilder();
-            dDO = new DateienUndOrdner();
+            _textBoxText = new StringBuilder();
+            _dDo = new DateienUndOrdner();
             KnxEinstellungen = Newtonsoft.Json.JsonConvert.DeserializeObject<Einstellungen>(File.ReadAllText("Einstellungen.json"));
             KnxEinstellungen.AlleKnxProjekte.Insert(0, new KnxProjekte("Bitte Projekt auswählen!"));
         }
 
         private void OrdnerStrukturAnpassen()
         {
-            string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string ProgDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string progDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
-            string[] LocalAppData = new string[] {
+            string[] localAppData = new string[] {
                     //"C:\\Users\\kurt.linder\\AppData\\Local\\KNX\\ETS5",
                     "KNX\\ETS5\\Cache",
                     "KNX\\ETS5\\Log",
@@ -38,7 +38,7 @@
                     "KNX\\ETS5\\Workspaces"
                     };
 
-            string[] ProgrammData = new string[] {
+            string[] programmData = new string[] {
                     //"C:\\ProgramData\\KNX\\ETS5",
                     "KNX\\ETS5\\Apps",
                     "KNX\\ETS5\\AppUpdate",
@@ -50,45 +50,45 @@
                     "KNX\\ETS5\\Updater"
                     };
 
-            enableBothButtons = false;
-            textBoxText.Clear();
+            _enableBothButtons = false;
+            _textBoxText.Clear();
 
-            foreach (string Ordner in LocalAppData) textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(AppDataFolder + "\\" + Ordner));
-            foreach (string Ordner in ProgrammData) textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(ProgDataFolder + "\\" + Ordner));
+            foreach (string ordner in localAppData) _textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(appDataFolder + "\\" + ordner));
+            foreach (string ordner in programmData) _textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(progDataFolder + "\\" + ordner));
 
-            textBoxText.Append("\n");
+            _textBoxText.Append("\n");
 
-            textBoxText.Append(dDO.OrdnerKopieren(KnxEinstellungen.AlleKnxProjekte[selectedIndex].Quelle + "\\AppData", AppDataFolder));
-            textBoxText.Append(dDO.OrdnerKopieren(KnxEinstellungen.AlleKnxProjekte[selectedIndex].Quelle + "\\ProgramData", ProgDataFolder));
+            _textBoxText.Append(_dDo.OrdnerKopieren(KnxEinstellungen.AlleKnxProjekte[_selectedIndex].Quelle + "\\AppData", appDataFolder));
+            _textBoxText.Append(_dDo.OrdnerKopieren(KnxEinstellungen.AlleKnxProjekte[_selectedIndex].Quelle + "\\ProgramData", progDataFolder));
 
             try
             {
-                System.Diagnostics.Process.Start("c:\\Program Files (x86)\\ETS5\\ETS5.exe");
+                Process.Start("c:\\Program Files (x86)\\ETS5\\ETS5.exe");
             }
             catch (Exception exp)
             {
                 Console.WriteLine($"{exp} Exception 12 caught.");
             }
 
-            textBoxText.Append("\n");
-            textBoxText.Append("ETS5 starten");
-            selectedIndex = 0;
+            _textBoxText.Append("\n");
+            _textBoxText.Append("ETS5 starten");
+            _selectedIndex = 0;
         }
 
-        internal bool BothButtonsEnabled() { return enableBothButtons; }
-        internal object TextBoxText() { return textBoxText; }
-        internal int GetSelectedIndex() { return selectedIndex; }
+        internal bool BothButtonsEnabled() { return _enableBothButtons; }
+        internal object TextBoxText() { return _textBoxText; }
+        internal int GetSelectedIndex() { return _selectedIndex; }
 
         internal void SelectedIndexChanched(object selectedIndex)
         {
             int i = (int)selectedIndex;
-            if (i > 0) enableBothButtons = true; else enableBothButtons = false;
-            this.selectedIndex = i;
-            textBoxText.Clear();
-            textBoxText.Append(KnxEinstellungen.AlleKnxProjekte[i].Kommentar);
+            _enableBothButtons = i > 0;
+            this._selectedIndex = i;
+            _textBoxText.Clear();
+            _textBoxText.Append(KnxEinstellungen.AlleKnxProjekte[i].Kommentar);
         }
 
-        internal void TasterStart() { System.Threading.Tasks.Task.Run(() => OrdnerStrukturAnpassen()); }
+        internal void TasterStart() { System.Threading.Tasks.Task.Run(OrdnerStrukturAnpassen); }
         internal void TasterStop()
         {
             try
@@ -99,8 +99,8 @@
             {
                 MessageBox.Show(ex.Message);
             }
-            selectedIndex = 0;
-            enableBothButtons = false;
+            _selectedIndex = 0;
+            _enableBothButtons = false;
         }
     }
 }

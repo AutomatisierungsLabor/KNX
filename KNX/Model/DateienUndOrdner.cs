@@ -4,16 +4,12 @@
     using System.IO;
     public class DateienUndOrdner
     {
-        public  DateienUndOrdner()
-        {
-            //
-        }
-        public static string OrdnerLoeschen(string Ordner)
+        public static string OrdnerLoeschen(string ordner)
         {
             try
             {
-                System.IO.Directory.Delete(Ordner, true);
-                return (Ordner + " gelöscht\n");
+                Directory.Delete(ordner, true);
+                return ordner + " gelöscht\n";
             }
             catch (Exception exp)
             {
@@ -22,15 +18,15 @@
             return "uups\n";
         }
 
-        public string OrdnerKopieren(string QuellOrdner, string ZielOrdner)
+        public string OrdnerKopieren(string quellOrdner, string zielOrdner)
         {
             try
             {
-                DirectoryInfo diSource = new DirectoryInfo(QuellOrdner);
-                DirectoryInfo diTarget = new DirectoryInfo(ZielOrdner);
+                DirectoryInfo diSource = new DirectoryInfo(quellOrdner);
+                DirectoryInfo diTarget = new DirectoryInfo(zielOrdner);
 
                 CopyAll(diSource, diTarget);
-                return (ZielOrdner + " kopiert\n");
+                return zielOrdner + " kopiert\n";
             }
             catch (Exception exp)
             {
@@ -46,7 +42,7 @@
             foreach (FileInfo fi in source.GetFiles())
             {
                 Console.WriteLine($@"Copying {target.FullName}\{fi.Name}");
-                fi.CopyTo(System.IO.Path.Combine(target.FullName, fi.Name), true);
+                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
             }
 
             foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())

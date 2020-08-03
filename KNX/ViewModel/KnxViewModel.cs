@@ -11,24 +11,17 @@
 
         public KnxViewModel()
         {
-            knx = new KNX.Model.Knx();
+            knx = new Model.Knx();
             ViAnzeige = new VisuAnzeigen(knx);
         }
 
-        public Model.Knx Knx { get { return knx; } }
+        public Model.Knx Knx => knx;
 
         #region BtnStart
         private ICommand _btnStart;
         public ICommand BtnStart
         {
-            get
-            {
-                if (_btnStart == null)
-                {
-                    _btnStart = new RelayCommand(p => knx.TasterStart(), p => true);
-                }
-                return _btnStart;
-            }
+            get { return _btnStart ?? (_btnStart = new RelayCommand(p => knx.TasterStart(), p => true)); }
         }
         #endregion
 
@@ -36,14 +29,7 @@
         private ICommand _btnStop;
         public ICommand BtnStop
         {
-            get
-            {
-                if (_btnStop == null)
-                {
-                    _btnStop = new RelayCommand(p => knx.TasterStop(), p => true);
-                }
-                return _btnStop;
-            }
+            get { return _btnStop ?? (_btnStop = new RelayCommand(p => knx.TasterStop(), p => true)); }
         }
         #endregion
         

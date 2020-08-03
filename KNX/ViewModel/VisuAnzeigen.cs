@@ -1,12 +1,12 @@
 ﻿namespace KNX.ViewModel
 {
-    using KNX.Model;
+    using Model;
     using System.ComponentModel;
     using System.Threading;
 
     public class VisuAnzeigen : INotifyPropertyChanged
     {
-        private readonly Model.Knx _knx;
+        private readonly Knx _knx;
 
         public VisuAnzeigen(Knx knx)
         {
@@ -16,7 +16,7 @@
             SelectedIndex = 0;
             TextBoxText = "";
 
-            System.Threading.Tasks.Task.Run(() => VisuAnzeigenTask());
+            System.Threading.Tasks.Task.Run(VisuAnzeigenTask);
         }
 
         private void VisuAnzeigenTask()
@@ -36,7 +36,7 @@
         private bool _enableButton;
         public bool EnableButton
         {
-            get { return _enableButton; }
+            get => _enableButton;
             set
             {
                 _enableButton = value;
@@ -49,7 +49,7 @@
         private object _selectedIndex;
         public object SelectedIndex
         {
-            get { return _selectedIndex; }
+            get => _selectedIndex;
             set
             {
                 _selectedIndex = value;
@@ -63,7 +63,7 @@
         private object _textBoxText;
         public object TextBoxText
         {
-            get { return _textBoxText; }
+            get => _textBoxText;
             set
             {
                 _textBoxText = value;
