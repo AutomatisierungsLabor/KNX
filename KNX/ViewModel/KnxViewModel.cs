@@ -6,30 +6,34 @@
     public class KnxViewModel
     {
 
-        public Model.Knx knx;
+        private readonly Model.Knx _knx;
+        // ReSharper disable once UnusedMember.Global
+        public Model.Knx Knx => _knx;
         public VisuAnzeigen ViAnzeige { get; set; }
 
         public KnxViewModel()
         {
-            knx = new Model.Knx();
-            ViAnzeige = new VisuAnzeigen(knx);
+            _knx = new Model.Knx();
+            ViAnzeige = new VisuAnzeigen(_knx);
         }
 
-        public Model.Knx Knx => knx;
+        
 
         #region BtnStart
         private ICommand _btnStart;
+        // ReSharper disable once UnusedMember.Global
         public ICommand BtnStart
         {
-            get { return _btnStart ?? (_btnStart = new RelayCommand(p => knx.TasterStart(), p => true)); }
+            get { return _btnStart ?? (_btnStart = new RelayCommand(p => _knx.TasterStart(), p => true)); }
         }
         #endregion
 
         #region BtnStop
         private ICommand _btnStop;
+        // ReSharper disable once UnusedMember.Global
         public ICommand BtnStop
         {
-            get { return _btnStop ?? (_btnStop = new RelayCommand(p => knx.TasterStop(), p => true)); }
+            get { return _btnStop ?? (_btnStop = new RelayCommand(p => _knx.TasterStop(), p => true)); }
         }
         #endregion
         
