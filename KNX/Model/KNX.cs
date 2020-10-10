@@ -24,10 +24,10 @@
 
         private void OrdnerStrukturAnpassen()
         {
-            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string progDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var progDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
 
-            string[] localAppData = new string[] {
+            var localAppData = new[] {
                     //"C:\\Users\\kurt.linder\\AppData\\Local\\KNX\\ETS5",
                     "KNX\\ETS5\\Cache",
                     "KNX\\ETS5\\Log",
@@ -38,7 +38,7 @@
                     "KNX\\ETS5\\Workspaces"
                     };
 
-            string[] programmData = new string[] {
+            var programmData = new[] {
                     //"C:\\ProgramData\\KNX\\ETS5",
                     "KNX\\ETS5\\Apps",
                     "KNX\\ETS5\\AppUpdate",
@@ -53,8 +53,8 @@
             _enableBothButtons = false;
             _textBoxText.Clear();
 
-            foreach (string ordner in localAppData) _textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(appDataFolder + "\\" + ordner));
-            foreach (string ordner in programmData) _textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(progDataFolder + "\\" + ordner));
+            foreach (var ordner in localAppData) _textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(appDataFolder + "\\" + ordner));
+            foreach (var ordner in programmData) _textBoxText.Append(DateienUndOrdner.OrdnerLoeschen(progDataFolder + "\\" + ordner));
 
             _textBoxText.Append("\n");
 
@@ -81,9 +81,9 @@
 
         internal void SelectedIndexChanched(object selectedIndex)
         {
-            int i = (int)selectedIndex;
+            var i = (int)selectedIndex;
             _enableBothButtons = i > 0;
-            this._selectedIndex = i;
+            _selectedIndex = i;
             _textBoxText.Clear();
             _textBoxText.Append(KnxEinstellungen.AlleKnxProjekte[i].Kommentar);
         }
@@ -93,7 +93,7 @@
         {
             try
             {
-                foreach (Process proc in Process.GetProcessesByName("ets5")) proc.Kill();
+                foreach (var proc in Process.GetProcessesByName("ets5")) proc.Kill();
             }
             catch (Exception ex)
             {
