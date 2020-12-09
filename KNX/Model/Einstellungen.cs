@@ -19,9 +19,6 @@ namespace KNX.Model
         public string Beschreibung { get; set; }
         public string Kommentar { get; set; }
         public string Quelle { get; set; }
-        public override string ToString()
-        {
-            return Beschreibung;
-        }
+        public override string ToString() => Beschreibung;
     }
 }

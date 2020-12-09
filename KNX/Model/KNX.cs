@@ -75,9 +75,9 @@
             _selectedIndex = 0;
         }
 
-        internal bool BothButtonsEnabled() { return _enableBothButtons; }
-        internal object TextBoxText() { return _textBoxText; }
-        internal int GetSelectedIndex() { return _selectedIndex; }
+        internal bool BothButtonsEnabled() => _enableBothButtons;
+        internal object TextBoxText() => _textBoxText;
+        internal int GetSelectedIndex() => _selectedIndex;
 
         internal void SelectedIndexChanched(object selectedIndex)
         {
@@ -88,7 +88,8 @@
             _textBoxText.Append(KnxEinstellungen.AlleKnxProjekte[i].Kommentar);
         }
 
-        internal void TasterStart() { System.Threading.Tasks.Task.Run(OrdnerStrukturAnpassen); }
+        internal void TasterStart() => System.Threading.Tasks.Task.Run(OrdnerStrukturAnpassen);
+
         internal void TasterStop()
         {
             try
