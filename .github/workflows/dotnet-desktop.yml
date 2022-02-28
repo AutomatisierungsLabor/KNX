@@ -20,9 +20,9 @@ jobs:
       # Create the app package by building and packaging the Windows Application Packaging project
       - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -o Publish
 
-      # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+      - run: zip knx.zip ./Publish/* -r
 
       - uses: actions/upload-artifact@v2
         with:
           name: KNX
-          path: Publish
+          path: knx.zip
