@@ -20,7 +20,11 @@ jobs:
       # Create the app package by building and packaging the Windows Application Packaging project
       - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -o Publish
 
-      - run: zip knx.zip ./Publish/* -r
+      -uses: TheDoctor0/zip-release@0.6.1
+       with:
+        type: 'zip'
+        path: Publish
+        filename: 'knx.zip'
 
       - uses: actions/upload-artifact@v2
         with:
