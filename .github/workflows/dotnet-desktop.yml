@@ -12,17 +12,14 @@ jobs:
       matrix:
         configuration: [Release]
 
-    runs-on: windows-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on: windows-latest 
 
-    env:
-      Solution_Name: KNX.sln
+  env:
+    PROJECT_PATH: KNX/KNX.csproj
 
-    steps:
+  steps:
     - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
+    - uses: actions/checkout@v2
 
     # Install the .NET Core workload
     - name: Install .NET Core
@@ -37,12 +34,13 @@ jobs:
 
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Create the app package
-      run: dotnet publish -c release --self-contained -r win-x64 -o Publish
-
+    - run: dotnet restore ${{ env.PROJECT_PATH }}
+    - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
+    - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-restore --self-contained -r win-x64 --no-build
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\Publish
+        name: KNX
+        path: ${{ env.PROJECT_PATH }}/Publish
