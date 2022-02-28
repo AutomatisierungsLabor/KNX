@@ -11,20 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # Install the .NET Core workload
-
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.x
 
-      # Create the app package by building and packaging the Windows Application Packaging project
       - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -o Publish
 
       -uses: TheDoctor0/zip-release@0.6.1
-       with:
-        type: 'zip'
-        path: Publish
-        filename: 'knx.zip'
+        with:
+          type: 'zip'
+          path: Publish
+          filename: 'knx.zip'
 
       - uses: actions/upload-artifact@v2
         with:
