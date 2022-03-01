@@ -16,15 +16,28 @@ jobs:
         with:
           dotnet-version: 6.x
 
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -o Publish
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -r win-x64 -o PublishMin
 
       - uses: TheDoctor0/zip-release@0.6.1
         with:
           type: 'zip'
-          path: Publish
-          filename: 'knx.zip'
+          path: PublishMin
+          filename: 'knxMin.zip'
 
       - uses: actions/upload-artifact@v2
         with:
-          name: KNX
-          path: knx.zip
+          name: KNX Min
+          path: knxMin.zip
+
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --self-contained -r win-x64 -o PublishComplete
+
+      - uses: TheDoctor0/zip-release@0.6.1
+        with:
+          type: 'zip'
+          path: PublishComplete
+          filename: 'knxComplete.zip'
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: KNX Complete
+          path: knxComplete.zip
