@@ -16,7 +16,7 @@ jobs:
         with:
           dotnet-version: 6.x
 
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -r win-x64 -o PublishMin
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -o PublishMin
 
       - uses: TheDoctor0/zip-release@0.6.1
         with:
