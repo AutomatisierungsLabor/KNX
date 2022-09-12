@@ -1,6 +1,5 @@
-﻿namespace KNX
+﻿namespace KNX;
+
+public partial class App
 {
-    public partial class App
-    {
-    }
 }
