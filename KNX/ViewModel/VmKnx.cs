@@ -1,4 +1,3 @@
-﻿using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using KNX.Model;
 
@@ -12,13 +11,13 @@ public partial class VmKnx : ObservableObject
     public VmKnx(ModelKnx modelKnx, CancellationTokenSource cancellationTokenSource)
     {
         _modelKnx = modelKnx;
-        _cancellationTokenSource=cancellationTokenSource;
+        _cancellationTokenSource = cancellationTokenSource;
 
+        ComboBoxItems = _modelKnx.GetItems();
         TextBoxInfo = "new ()";
-
         BoolEnableStartButton = false;
 
-        System.Threading.Tasks.Task.Run(KnxTask);
+        _ = Task.Run(KnxTask);
     }
     private void KnxTask()
     {
@@ -26,7 +25,7 @@ public partial class VmKnx : ObservableObject
         {
             Thread.Sleep(100);
 
-            if (TextBoxInfo == null || _modelKnx == null) continue;
+            if (TextBoxInfo == null || _modelKnx == null) { continue; }
 
             TextBoxInfo = _modelKnx.GetTextBoxInfo();
             SelectorIndex = _modelKnx.GetSelectedIndex();

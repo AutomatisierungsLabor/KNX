@@ -1,4 +1,3 @@
-﻿using System.Threading;
 using KNX.ViewModel;
 
 namespace KNX;
@@ -6,13 +5,13 @@ namespace KNX;
 // ReSharper disable once UnusedMember.Global
 public partial class MainWindow
 {
-    private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
+    private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
 
     public CancellationTokenSource CancellationTokenSource { get; set; }
 
     public MainWindow()
     {
-        Log.Debug("Konstruktor - startet");
+        s_log.Debug("Konstruktor - startet");
 
         CancellationTokenSource=new CancellationTokenSource();
       
