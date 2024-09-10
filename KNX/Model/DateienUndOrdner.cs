@@ -1,6 +1,6 @@
 namespace KNX.Model;
 
-public class DateienUndOrdner
+public static class DateienUndOrdner
 {
     private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
 

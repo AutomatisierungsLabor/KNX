@@ -8,7 +8,7 @@ public class ModelKnx
 {
     private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
 
-    public Einstellungen? KnxEinstellungen { get; set; }
+    private Einstellungen? KnxEinstellungen { get; }
     private int _selectedIndex;
     private bool _enableBothButtons;
     private readonly StringBuilder _stringBuilderInfo;
