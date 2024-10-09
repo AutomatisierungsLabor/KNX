@@ -1,12 +1,13 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 
 namespace KNX.Model;
 
 public class ModelKnx
 {
-    private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
+    private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType ?? throw new InvalidOperationException());
 
     private Einstellungen? KnxEinstellungen { get; }
     private int _selectedIndex;
@@ -15,12 +16,12 @@ public class ModelKnx
 
     public ModelKnx()
     {
-         _stringBuilderInfo = new StringBuilder();
+        _stringBuilderInfo = new StringBuilder();
 
         try
         {
             KnxEinstellungen = Newtonsoft.Json.JsonConvert.DeserializeObject<Einstellungen>(File.ReadAllText("Einstellungen.json"));
-            if (KnxEinstellungen == null) { throw new Exception("Einstellungen.json leer!");}
+            if (KnxEinstellungen == null) { throw new Exception("Einstellungen.json leer!"); }
             KnxEinstellungen?.AlleKnxProjekte.Insert(0, new KnxProjekte("Bitte Projekt auswählen!"));
         }
         catch (Exception ex)
@@ -69,8 +70,8 @@ public class ModelKnx
         try
         {
             var namePfadEts5 = Path.Combine("c", "Program Files (x86)", "ETS5", "ETS5.exe");
-          _=  Process.Start(namePfadEts5);
-          _=  _stringBuilderInfo.Append("\nETS5 starten");
+            _ = Process.Start(namePfadEts5);
+            _ = _stringBuilderInfo.Append("\nETS5 starten");
         }
         catch (Exception ex)
         {

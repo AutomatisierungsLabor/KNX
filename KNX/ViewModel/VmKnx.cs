@@ -1,5 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using KNX.Model;
+using System.Diagnostics;
+using System.Windows.Media;
 
 namespace KNX.ViewModel;
 
@@ -16,6 +18,7 @@ public partial class VmKnx : ObservableObject
         ComboBoxItems = _modelKnx.GetItems();
         TextBoxInfo = "new ()";
         BoolEnableStartButton = false;
+        BrushStopButtonColor = Brushes.Beige;
 
         _ = Task.Run(KnxTask);
     }
@@ -26,6 +29,12 @@ public partial class VmKnx : ObservableObject
             Thread.Sleep(100);
 
             if (TextBoxInfo == null || _modelKnx == null) { continue; }
+
+            BrushStopButtonColor = Brushes.LightGray;
+            foreach (var process in Process.GetProcesses())
+            {
+                if (process.ProcessName.Contains("ETS")) { BrushStopButtonColor = Brushes.Red; }
+            }
 
             TextBoxInfo = _modelKnx.GetTextBoxInfo();
             SelectorIndex = _modelKnx.GetSelectedIndex();

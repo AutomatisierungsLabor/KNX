@@ -1,8 +1,10 @@
+using System.Reflection;
+
 namespace KNX.Model;
 
 public static class DateienUndOrdner
 {
-    private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod()?.DeclaringType);
+    private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType ?? throw new InvalidOperationException());
 
     public static string OrdnerLoeschen(string ordner)
     {
