@@ -28,7 +28,7 @@
 
         <Label Content="V4.0 " Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="36" />
 
-        <Button Grid.Column="3" Grid.Row="1" Content="Start"  Background="LawnGreen"                                FontSize="14pt" IsEnabled="{Binding BoolEnableStartButton}" Command="{Binding ButtonStartCommand}"/>
+        <Button Grid.Column="3" Grid.Row="1" Content="Start"  Background="{Binding BrushStartButtonColor}"   FontSize="14pt" IsEnabled="{Binding BoolEnableStartButton}" Command="{Binding ButtonStartCommand}"/>
         <Button Grid.Column="3" Grid.Row="3" Content="Stop"   Background="{Binding BrushStopButtonColor}"    FontSize="14pt"                                                        Command="{Binding ButtonStopCommand}"/>
 
         <ComboBox Grid.Column="1" Grid.Row="1" FontSize="14pt" SelectedIndex="{Binding SelectorIndex, Mode=TwoWay }"  ItemsSource="{Binding ComboBoxItems}"/>

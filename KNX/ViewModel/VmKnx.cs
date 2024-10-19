@@ -19,6 +19,7 @@ public partial class VmKnx : ObservableObject
         TextBoxInfo = "new ()";
         BoolEnableStartButton = false;
         BrushStopButtonColor = Brushes.Beige;
+        BrushStartButtonColor = Brushes.Beige;
 
         _ = Task.Run(KnxTask);
     }
@@ -30,11 +31,8 @@ public partial class VmKnx : ObservableObject
 
             if (TextBoxInfo == null || _modelKnx == null) { continue; }
 
-            BrushStopButtonColor = Brushes.LightGray;
-            foreach (var process in Process.GetProcesses())
-            {
-                if (process.ProcessName.Contains("ETS")) { BrushStopButtonColor = Brushes.Red; }
-            }
+            BrushStartButtonColor = EtsAktiv() ? Brushes.LightGray : Brushes.LawnGreen;
+            BrushStopButtonColor = EtsAktiv() ? Brushes.Red : Brushes.LightGray;
 
             TextBoxInfo = _modelKnx.GetTextBoxInfo();
             SelectorIndex = _modelKnx.GetSelectedIndex();
@@ -42,4 +40,6 @@ public partial class VmKnx : ObservableObject
             ComboBoxItems = _modelKnx.GetItems();
         }
     }
+
+    private static bool EtsAktiv() => Process.GetProcesses().Any(process => process.ProcessName.Contains("ETS"));
 }

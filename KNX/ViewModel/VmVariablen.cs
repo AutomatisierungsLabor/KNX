@@ -9,6 +9,7 @@ public partial class VmKnx
     [ObservableProperty] private bool _boolEnableStartButton;
     [ObservableProperty] private string? _textBoxInfo;
     [ObservableProperty] private Brush? _brushStopButtonColor;
+    [ObservableProperty] private Brush? _brushStartButtonColor;
     [ObservableProperty] private ObservableCollection<string>? _comboBoxItems;
 
     private int _selectedIndex;
