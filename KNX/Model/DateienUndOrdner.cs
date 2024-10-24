@@ -8,6 +8,12 @@ public static class DateienUndOrdner
 
     public static string OrdnerLoeschen(string ordner)
     {
+        if (!Directory.Exists(ordner))
+        {
+            s_log.Debug("Ordner ist nicht vorhanden: " + ordner);
+            return $"\n{ordner} fehlt!";
+        }
+
         try
         {
             Directory.Delete(ordner, true);

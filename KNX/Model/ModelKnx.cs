@@ -69,7 +69,8 @@ public class ModelKnx
 
         try
         {
-            var namePfadEts5 = Path.Combine("c", "Program Files (x86)", "ETS5", "ETS5.exe");
+            var programFiles = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFilesX86);
+            var namePfadEts5 = Path.Combine(programFiles, "ETS5", "ETS5.exe");
             _ = Process.Start(namePfadEts5);
             _ = _stringBuilderInfo.Append("\nETS5 starten");
         }
