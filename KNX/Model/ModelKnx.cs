@@ -95,7 +95,7 @@ public class ModelKnx
     internal void TasterStart() => Task.Run(OrdnerStrukturAnpassen);
     internal void TasterStop()
     {
-        
+
         try
         {
             foreach (var proc in Process.GetProcessesByName("ets5")) { proc.Kill(); }
