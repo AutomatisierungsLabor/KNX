@@ -20,7 +20,7 @@ public partial class VmKnx
         set
         {
             _selectedIndex = value;
-            _modelKnx.SelectedIndexChanched(_selectedIndex);
+            _modelKnx.SelectedIndexChanged(_selectedIndex);
             OnPropertyChanged();
         }
     }
