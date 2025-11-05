@@ -26,7 +26,7 @@
             <RowDefinition Height="10"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="V4.0 " Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="36" />
+        <Label Content="V5.0 " Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="36" />
 
         <Button Grid.Column="3" Grid.Row="1" Content="Start"  Background="{Binding BrushStartButtonColor}"   FontSize="14pt" IsEnabled="{Binding BoolEnableStartButton}" Command="{Binding ButtonStartCommand}"/>
         <Button Grid.Column="3" Grid.Row="3" Content="Stop"   Background="{Binding BrushStopButtonColor}"    FontSize="14pt"                                                        Command="{Binding ButtonStopCommand}"/>

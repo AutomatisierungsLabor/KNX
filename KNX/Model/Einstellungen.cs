@@ -10,7 +10,6 @@ public class Einstellungen
 public class KnxProjekte(string beschreibung)
 {
     public string Beschreibung { get; set; } = beschreibung;
-    public string Kommentar { get; set; } = "";
-    public string Quelle { get; set; } = "";
-    public override string ToString() => Beschreibung;
+    public string? Kommentar { get; set; } = string.Empty;
+    public string? Quelle { get; set; } = String.Empty;
 }
