@@ -12,15 +12,13 @@ public partial class VmKnx
     [ObservableProperty] private Brush? _brushStartButtonColor;
     [ObservableProperty] private ObservableCollection<string>? _comboBoxItems;
 
-    private int _selectedIndex;
-
     public int SelectorIndex
     {
-        get => _selectedIndex;
+        get;
         set
         {
-            _selectedIndex = value;
-            _modelKnx.SelectedIndexChanged(_selectedIndex);
+            field = value;
+            _modelKnx.SelectedIndexChanged(field);
             OnPropertyChanged();
         }
     }
