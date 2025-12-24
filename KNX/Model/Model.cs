@@ -8,14 +8,15 @@ namespace KNX.Model;
 public partial class Model
 {
     private readonly ILogger<Model> _logger;
-    private DateienUndOrdner _dateienUndOrdner = new DateienUndOrdner();
+    private readonly DateienUndOrdner _dateienUndOrdner ;
     private Einstellungen? KnxEinstellungen { get; }
     private int _selectedIndex;
     private bool _enableBothButtons;
     private readonly StringBuilder _stringBuilderInfo;
 
-    public Model(ILogger<Model> logger)
+    public Model(DateienUndOrdner dateienUndOrdner, ILogger<Model> logger)
     {
+        _dateienUndOrdner = dateienUndOrdner;
         _logger = logger;
         _stringBuilderInfo = new StringBuilder();
 
@@ -56,15 +57,15 @@ public partial class Model
         _enableBothButtons = false;
         _ = _stringBuilderInfo.Clear();
 
-        foreach (var ordner in localAppData) { _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerLoeschen(Path.Combine(appDataFolder, ordner), _logger)); }
-        foreach (var ordner in programmData) { _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerLoeschen(Path.Combine(progDataFolder, ordner), _logger)); }
+        foreach (var ordner in localAppData) { _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerLoeschen(Path.Combine(appDataFolder, ordner))); }
+        foreach (var ordner in programmData) { _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerLoeschen(Path.Combine(progDataFolder, ordner))); }
 
         var pfadQuelle = KnxEinstellungen?.AlleKnxProjekte[_selectedIndex].Quelle;
         if (pfadQuelle is null) { return; }
 
         _ = _stringBuilderInfo.Append('\n');
-        _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerKopieren(Path.Combine(pfadQuelle, "AppData"), appDataFolder, _logger));
-        _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerKopieren(Path.Combine(pfadQuelle, "ProgramData"), progDataFolder, _logger));
+        _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerKopieren(Path.Combine(pfadQuelle, "AppData"), appDataFolder));
+        _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerKopieren(Path.Combine(pfadQuelle, "ProgramData"), progDataFolder));
 
         try
         {

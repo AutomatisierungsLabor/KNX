@@ -2,10 +2,9 @@ using Microsoft.Extensions.Logging;
 
 namespace KNX.Model;
 
-public partial class DateienUndOrdner
+public partial class DateienUndOrdner(ILogger<DateienUndOrdner> logger)
 {
-
-    public string OrdnerLoeschen(string ordner, ILogger<Model> logger)
+    public string OrdnerLoeschen(string ordner)
     {
         if (!Directory.Exists(ordner))
         {
@@ -18,13 +17,13 @@ public partial class DateienUndOrdner
             Directory.Delete(ordner, true);
             return ordner + " gelöscht\n";
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            LogWarningException();
+            LogWarningException(e);
         }
         return $"\nKann {ordner} nicht löschen!";
     }
-    public string OrdnerKopieren(string quellOrdner, string zielOrdner, ILogger<Model> logger)
+    public string OrdnerKopieren(string quellOrdner, string zielOrdner)
     {
         if (string.IsNullOrEmpty(quellOrdner))
         {
@@ -58,9 +57,9 @@ public partial class DateienUndOrdner
             CopyAll(diSource, diTarget);
             return $"\n{zielOrdner} kopiert";
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            LogWarningException();
+            LogWarningException(e);
         }
         return $"\nKann {quellOrdner} -> {zielOrdner} nicht kopieren!";
     }
@@ -81,8 +80,9 @@ public partial class DateienUndOrdner
         }
     }
 
-    [LoggerMessage(LogLevel.Warning, message: "Exception:")]
-    public partial void LogWarningException();
+
+    [LoggerMessage(LogLevel.Warning, message: "Exception: {e}")]
+    public partial void LogWarningException(Exception e);
 
     [LoggerMessage(LogLevel.Warning, message: "Ordner fehlt: {ordner}")]
     private partial void LogWarningOrdnerFehlt(string ordner);

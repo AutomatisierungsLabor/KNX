@@ -39,6 +39,7 @@ public partial class App
         _ = builder.Services.AddSingleton<MainWindow>();
         _ = builder.Services.AddSingleton<ViewModel.ViewModel>();
         _ = builder.Services.AddSingleton<Model.Model>();
+        _ = builder.Services.AddSingleton<Model.DateienUndOrdner>();
 
         var host = builder.Build();
         var window = host.Services.GetRequiredService<MainWindow>();
