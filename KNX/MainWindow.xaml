@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel1="clr-namespace:KNX.ViewModel"
-        d:DataContext="{d:DesignInstance Type=viewModel1:VmKnx}"
+        d:DataContext="{d:DesignInstance Type=viewModel1:ViewModel}"
         mc:Ignorable="d"
         Title="KNX" Height="600" Width="800">
     <Grid>
@@ -26,10 +26,10 @@
             <RowDefinition Height="10"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label Content="V5.1 " Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="36" />
+        <Label Content="V5.2 " Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="25" Width="36" />
 
         <Button Grid.Column="3" Grid.Row="1" Content="Start"  Background="{Binding BrushStartButtonColor}"   FontSize="14pt" IsEnabled="{Binding BoolEnableStartButton}" Command="{Binding ButtonStartCommand}"/>
-        <Button Grid.Column="3" Grid.Row="3" Content="Stop"   Background="{Binding BrushStopButtonColor}"    FontSize="14pt"                                                        Command="{Binding ButtonStopCommand}"/>
+        <Button Grid.Column="3" Grid.Row="3" Content="Stop"   Background="{Binding BrushStopButtonColor}"    FontSize="14pt"                                                            Command="{Binding ButtonStopCommand}"/>
 
         <ComboBox Grid.Column="1" Grid.Row="1" FontSize="14pt" SelectedIndex="{Binding SelectorIndex, Mode=TwoWay }"  ItemsSource="{Binding ComboBoxItems}"/>
 

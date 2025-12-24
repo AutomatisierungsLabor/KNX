@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace KNX.ViewModel;
 
-public partial class VmKnx
+public partial class ViewModel
 {
     [ObservableProperty] private bool _boolEnableStartButton;
     [ObservableProperty] private string? _textBoxInfo;
@@ -18,7 +18,7 @@ public partial class VmKnx
         set
         {
             field = value;
-            _modelKnx.SelectedIndexChanged(field);
+            _model.SelectedIndexChanged(field);
             OnPropertyChanged();
         }
     }

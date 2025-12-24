@@ -1,25 +1,15 @@
-using KNX.ViewModel;
-using System.Reflection;
+using Microsoft.Extensions.Logging;
 
 namespace KNX;
 
 // ReSharper disable once UnusedMember.Global
 public partial class MainWindow
 {
-    private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType ?? throw new InvalidOperationException());
-
-    private CancellationTokenSource CancellationTokenSource { get; }
-
-    public MainWindow()
+    public MainWindow(ViewModel.ViewModel viewModel, ILogger<MainWindow>logger)
     {
-        s_log.Debug("Konstruktor - startet");
-
-        CancellationTokenSource = new CancellationTokenSource();
-
-        var modelKnx = new Model.ModelKnx();
-        var vmKnx = new VmKnx(modelKnx, CancellationTokenSource);
+        logger.LogDebug("Konstruktor - startet");
 
         InitializeComponent();
-        DataContext = vmKnx;
+        DataContext = viewModel;
     }
 }

@@ -1,21 +1,20 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using KNX.Model;
 using System.Diagnostics;
 using System.Windows.Media;
 
 namespace KNX.ViewModel;
 
-public partial class VmKnx : ObservableObject
+public partial class ViewModel : ObservableObject
 {
-    private readonly ModelKnx _modelKnx;
+    private readonly Model.Model _model;
     private readonly CancellationTokenSource _cancellationTokenSource;
 
-    public VmKnx(ModelKnx modelKnx, CancellationTokenSource cancellationTokenSource)
+    public ViewModel(Model.Model model, CancellationTokenSource cancellationTokenSource)
     {
-        _modelKnx = modelKnx;
+        _model = model;
         _cancellationTokenSource = cancellationTokenSource;
 
-        ComboBoxItems = _modelKnx.GetItems();
+        ComboBoxItems = _model.GetItems();
         TextBoxInfo = "new ()";
         BoolEnableStartButton = false;
         BrushStopButtonColor = Brushes.Beige;
@@ -29,17 +28,17 @@ public partial class VmKnx : ObservableObject
         {
             Thread.Sleep(100);
 
-            if (TextBoxInfo == null || _modelKnx == null) { continue; }
+            if (TextBoxInfo == null || _model == null) { continue; }
 
             var etsAktiv = Process.GetProcesses().Any(process => process.ProcessName.Contains("ETS"));
 
             BrushStartButtonColor = etsAktiv ? Brushes.LightGray : Brushes.LawnGreen;
             BrushStopButtonColor = etsAktiv ? Brushes.Red : Brushes.LightGray;
 
-            TextBoxInfo = _modelKnx.GetTextBoxInfo();
-            SelectorIndex = _modelKnx.GetSelectedIndex();
-            BoolEnableStartButton = _modelKnx.BothButtonsEnabled();
-            ComboBoxItems = _modelKnx.GetItems();
+            TextBoxInfo = _model.GetTextBoxInfo();
+            SelectorIndex = _model.GetSelectedIndex();
+            BoolEnableStartButton = _model.BothButtonsEnabled();
+            ComboBoxItems = _model.GetItems();
         }
     }
 }
