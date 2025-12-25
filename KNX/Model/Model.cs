@@ -8,7 +8,7 @@ namespace KNX.Model;
 public partial class Model
 {
     private readonly ILogger<Model> _logger;
-    private readonly DateienUndOrdner _dateienUndOrdner ;
+    private readonly DateienUndOrdner _dateienUndOrdner;
     private Einstellungen? KnxEinstellungen { get; }
     private int _selectedIndex;
     private bool _enableBothButtons;
@@ -27,9 +27,9 @@ public partial class Model
 
             KnxEinstellungen?.AlleKnxProjekte.Insert(0, new KnxProjekte("Bitte Projekt auswählen!"));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            LogWarningException();
+            LogWarningException(ex);
         }
     }
 
@@ -74,13 +74,12 @@ public partial class Model
             _ = Process.Start(namePfadEts5);
             _ = _stringBuilderInfo.Append("\nETS5 starten");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            LogWarningException();
+            LogWarningException(ex);
             _ = _stringBuilderInfo.Append("\nETS5 konnte nicht gestartet werden!");
         }
-
-        _selectedIndex = 0;
+        AnzeigeLoeschen();
     }
 
     internal bool BothButtonsEnabled() => _enableBothButtons;
@@ -103,13 +102,12 @@ public partial class Model
         {
             foreach (var proc in Process.GetProcessesByName("ets5")) { proc.Kill(); }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            LogWarningException();
+            LogWarningException(ex);
         }
 
-        _selectedIndex = 0;
-        _enableBothButtons = false;
+        AnzeigeLoeschen();
     }
 
     public ObservableCollection<string> GetItems()
@@ -120,6 +118,13 @@ public partial class Model
         return items;
     }
 
+    private void AnzeigeLoeschen()
+    {
+        _selectedIndex = 0;
+        _enableBothButtons = false;
+        _stringBuilderInfo.Clear();
+    }
+
     [LoggerMessage(LogLevel.Warning, message: "Exception:")]
-    public partial void LogWarningException();
+    public partial void LogWarningException(Exception ex);
 }
