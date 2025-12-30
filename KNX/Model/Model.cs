@@ -1,21 +1,23 @@
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Reflection;
 using System.Text;
 
 namespace KNX.Model;
 
-public class ModelKnx
+public partial class Model
 {
-    private static readonly log4net.ILog s_log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType ?? throw new InvalidOperationException());
-
+    private readonly ILogger<Model> _logger;
+    private readonly DateienUndOrdner _dateienUndOrdner;
     private Einstellungen? KnxEinstellungen { get; }
     private int _selectedIndex;
     private bool _enableBothButtons;
     private readonly StringBuilder _stringBuilderInfo;
 
-    public ModelKnx()
+    public Model(DateienUndOrdner dateienUndOrdner, ILogger<Model> logger)
     {
+        _dateienUndOrdner = dateienUndOrdner;
+        _logger = logger;
         _stringBuilderInfo = new StringBuilder();
 
         try
@@ -27,7 +29,7 @@ public class ModelKnx
         }
         catch (Exception ex)
         {
-            s_log.Debug("Einstellungen.json konnten nicht gelesen werden: " + ex);
+            LogWarningException(ex);
         }
     }
 
@@ -55,15 +57,15 @@ public class ModelKnx
         _enableBothButtons = false;
         _ = _stringBuilderInfo.Clear();
 
-        foreach (var ordner in localAppData) { _ = _stringBuilderInfo.Append(DateienUndOrdner.OrdnerLoeschen(Path.Combine(appDataFolder, ordner))); }
-        foreach (var ordner in programmData) { _ = _stringBuilderInfo.Append(DateienUndOrdner.OrdnerLoeschen(Path.Combine(progDataFolder, ordner))); }
+        foreach (var ordner in localAppData) { _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerLoeschen(Path.Combine(appDataFolder, ordner))); }
+        foreach (var ordner in programmData) { _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerLoeschen(Path.Combine(progDataFolder, ordner))); }
 
         var pfadQuelle = KnxEinstellungen?.AlleKnxProjekte[_selectedIndex].Quelle;
         if (pfadQuelle is null) { return; }
 
         _ = _stringBuilderInfo.Append('\n');
-        _ = _stringBuilderInfo.Append(DateienUndOrdner.OrdnerKopieren(Path.Combine(pfadQuelle, "AppData"), appDataFolder));
-        _ = _stringBuilderInfo.Append(DateienUndOrdner.OrdnerKopieren(Path.Combine(pfadQuelle, "ProgramData"), progDataFolder));
+        _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerKopieren(Path.Combine(pfadQuelle, "AppData"), appDataFolder));
+        _ = _stringBuilderInfo.Append(_dateienUndOrdner.OrdnerKopieren(Path.Combine(pfadQuelle, "ProgramData"), progDataFolder));
 
         try
         {
@@ -74,11 +76,10 @@ public class ModelKnx
         }
         catch (Exception ex)
         {
-            s_log.Debug("ETS5 konnte nicht gestartet werden!" + ex);
+            LogWarningException(ex);
             _ = _stringBuilderInfo.Append("\nETS5 konnte nicht gestartet werden!");
         }
-
-        _selectedIndex = 0;
+        AnzeigeLoeschen();
     }
 
     internal bool BothButtonsEnabled() => _enableBothButtons;
@@ -103,11 +104,10 @@ public class ModelKnx
         }
         catch (Exception ex)
         {
-            s_log.Debug("ETS5 konnte nicht gestoppt werden: " + ex);
+            LogWarningException(ex);
         }
 
-        _selectedIndex = 0;
-        _enableBothButtons = false;
+        AnzeigeLoeschen();
     }
 
     public ObservableCollection<string> GetItems()
@@ -117,4 +117,14 @@ public class ModelKnx
         foreach (var knxProjekte in KnxEinstellungen.AlleKnxProjekte) { items.Add(knxProjekte.Beschreibung); }
         return items;
     }
+
+    private void AnzeigeLoeschen()
+    {
+        _selectedIndex = 0;
+        _enableBothButtons = false;
+        _stringBuilderInfo.Clear();
+    }
+
+    [LoggerMessage(LogLevel.Warning, message: "Exception:")]
+    public partial void LogWarningException(Exception ex);
 }

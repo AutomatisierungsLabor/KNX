@@ -11,5 +11,5 @@ public class KnxProjekte(string beschreibung)
 {
     public string Beschreibung { get; set; } = beschreibung;
     public string? Kommentar { get; set; } = string.Empty;
-    public string? Quelle { get; set; } = String.Empty;
+    public string? Quelle { get; set; } = string.Empty;
 }

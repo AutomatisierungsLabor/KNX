@@ -4,7 +4,7 @@ using System.Windows.Media;
 
 namespace KNX.ViewModel;
 
-public partial class VmKnx
+public partial class ViewModel
 {
     [ObservableProperty] private bool _boolEnableStartButton;
     [ObservableProperty] private string? _textBoxInfo;
@@ -12,15 +12,13 @@ public partial class VmKnx
     [ObservableProperty] private Brush? _brushStartButtonColor;
     [ObservableProperty] private ObservableCollection<string>? _comboBoxItems;
 
-    private int _selectedIndex;
-
     public int SelectorIndex
     {
-        get => _selectedIndex;
+        get;
         set
         {
-            _selectedIndex = value;
-            _modelKnx.SelectedIndexChanged(_selectedIndex);
+            field = value;
+            _model.SelectedIndexChanged(field);
             OnPropertyChanged();
         }
     }
